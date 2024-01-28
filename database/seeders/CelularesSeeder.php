@@ -37,7 +37,7 @@ class CelularesSeeder extends Seeder
             $celulares->description = $celular['description'];
             $celulares->save();
         }*/
-
+        
         \App\Models\Celular::factory(10)->create();
     }
 }
