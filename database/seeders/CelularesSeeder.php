@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Celular;
 
 class CelularesSeeder extends Seeder
 {
@@ -13,7 +12,7 @@ class CelularesSeeder extends Seeder
      */
     public function run(): void
     {
-        $celularesData = [
+        /*$celularesData = [
             [
                 'name' => 'Celular 1',
                 'price' => 1800,
@@ -37,6 +36,8 @@ class CelularesSeeder extends Seeder
             $celulares->price = $celular['price'];
             $celulares->description = $celular['description'];
             $celulares->save();
-        }
+        }*/
+
+        \App\Models\Celular::factory(10)->create();
     }
 }
