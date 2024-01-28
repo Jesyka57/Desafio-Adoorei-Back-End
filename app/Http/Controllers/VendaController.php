@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Celular;
 use App\Models\Venda;
+use App\Models\VendaProduto;
 
 class VendaController extends Controller
 {
@@ -17,18 +18,23 @@ class VendaController extends Controller
 
     public function cadastrarVenda(Request $request)
     {
-        // Valide os dados do pedido conforme necessário
-        $request->validate([
-            'products' => 'required|array',
-        ]);
-
-        // Crie a venda no banco de dados
-        $venda = Venda::create([
-            'amount' => $this->calcularValorTotal($request->products),
-        ]);
-
-        // Associe os produtos à venda
-        $venda->produtos()->attach($request->products);
+        $venda_amount = 0;
+        $venda = new Venda();
+        $venda->sales_id = $request->id_venda;
+        $venda->save();
+        foreach ($request->products as $product)
+        {
+            $produto_venda = new VendaProduto();
+            $produto_venda->venda_id = $request->id_venda;
+            $produto_venda->product_id = $product['product_id'];
+            $produto_venda->nome = $product['nome'];
+            $produto_venda->price = $product['price'];
+            $produto_venda->amount = $product['amount'];
+            $venda_amount++;
+            $produto_venda->save();
+        }
+        $venda->amount = $venda_amount;
+        $venda->save();
 
         // Retorne a resposta da API
         return response()->json([
