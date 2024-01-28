@@ -10,7 +10,7 @@ class CreateVendasTable extends Migration
     {
         Schema::create('vendas', function (Blueprint $table) {
             $table->id();
-            $table->string('sales_id');
+            $table->string('venda_id');
             $table->decimal('amount', 10, 2);
             $table->timestamps();
         });

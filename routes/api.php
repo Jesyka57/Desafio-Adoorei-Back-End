@@ -17,6 +17,7 @@ use App\Http\Controllers\VendaController;
 
 Route::get('/produtos', [VendaController::class, 'listarProdutosDisponiveis']);
 Route::post('/vendas', [VendaController::class, 'cadastrarVenda']);
+Route::put('/vendas/{id}', [VendaController::class,'editarVenda']);
 Route::get('/vendas', [VendaController::class, 'consultarVendasRealizadas']);
 Route::get('/vendas/{id}', [VendaController::class, 'consultarVendaEspecifica']);
 Route::delete('/vendas/{id}', [VendaController::class, 'cancelarVenda']);

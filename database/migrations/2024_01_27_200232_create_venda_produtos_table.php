@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nome');
             $table->decimal('price', 10, 2);
             $table->integer('amount');
+            $table->boolean('cancel')->default(false);
             $table->timestamps();
         });
     }

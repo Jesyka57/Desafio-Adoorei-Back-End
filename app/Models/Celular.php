@@ -13,5 +13,5 @@ class Celular extends Model
 
     protected $table = 'celulares';
 
-    protected $fillable = ['name', 'price', 'description'];
+    protected $fillable = ['name', 'price', 'amount','description'];
 }

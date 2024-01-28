@@ -24,6 +24,7 @@ class CelularFactory extends Factory
         return [
             'name' => $this->faker->word,
             'price' => $this->faker->randomFloat(2, 500, 10000),
+            'amount' => $this->faker->numberBetween(1, 100),
             'description' => $this->faker->sentence
         ];
     }
