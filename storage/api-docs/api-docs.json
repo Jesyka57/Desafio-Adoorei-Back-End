@@ -1,0 +1,155 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Docker Example",
+        "version": "0.0.0.1"
+    },
+    "paths": {
+        "/api/produtos": {
+            "get": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Obtém a lista de todos os produtos",
+                "operationId": "2c8d9ab9542b2af4e59939f07333644e",
+                "responses": {
+                    "200": {
+                        "description": "Operação executada com sucesso"
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    },
+                    "403": {
+                        "description": "Proibido"
+                    }
+                }
+            }
+        },
+        "/api/vendas": {
+            "get": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Obtém a lista de todas as vendas realizadas",
+                "operationId": "f3e87d61dbe7b9924e1ec26ea1722882",
+                "responses": {
+                    "200": {
+                        "description": "Operação executada com sucesso"
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    },
+                    "403": {
+                        "description": "Proibido"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Criação de uma nova venda",
+                "operationId": "d88028b13315b5768cab14937e31874f",
+                "parameters": [
+                    {
+                        "name": "id_venda",
+                        "in": "path",
+                        "description": "ID da venda",
+                        "required": true,
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "JSON para a criação da venda",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "products": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "product_id": {
+                                                    "type": "integer"
+                                                },
+                                                "nome": {
+                                                    "type": "string"
+                                                },
+                                                "price": {
+                                                    "type": "number",
+                                                    "format": "float"
+                                                },
+                                                "amount": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "A venda já existe"
+                    },
+                    "422": {
+                        "description": "Dados não processados"
+                    }
+                }
+            }
+        },
+        "/api/vendas/{id}": {
+            "get": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Obtém uma venda especifica",
+                "operationId": "67bc1507027596b3629d4c488dc31748",
+                "responses": {
+                    "200": {
+                        "description": "Operação executada com sucesso"
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    },
+                    "403": {
+                        "description": "Proibido"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Cancela uma venda especifica",
+                "operationId": "620d0d0948e181653b0801cf06d7796e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id da venda",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Operação executada com sucesso"
+                    },
+                    "403": {
+                        "description": "Proibido"
+                    }
+                }
+            }
+        }
+    }
+}
