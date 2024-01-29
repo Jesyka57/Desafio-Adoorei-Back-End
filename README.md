@@ -38,11 +38,6 @@ Instale o laravel sail:
 php artisan sail:install
 ```
 
-Depois faça suba a aplicação no docker:
-```
-docker-compose down
-```
-
 Já dentro da aplicação, Instale o composer:
 ```
 composer install --no-autoloader
@@ -65,10 +60,16 @@ docker run -p 8080:80 -p 5173:73 -e LARAVEL_SAIL=1 -v $(pwd):/var/www/html --nam
 ```
 ./vendor/bin/sail up
 ```
+Após isso, a aplicação já estará rodando normalmente e será possivel ver via promt mesmo.
+
+Swagger:
+
 Windows:
 
 ```
-<comando_de_instalação>
+A diferença entre o linux e o windows é que a necessidade de instalar o WSL para que o laravel sail funcione
+tanto que eu programei na SO Windows atraves do WSL, recomendo <https://learn.microsoft.com/en-us/windows/wsl/install>
+e após a intalação seguir os passos desde o inicio do Linux.
 ```
 
 ## ☕ Usando <nome_do_projeto>
