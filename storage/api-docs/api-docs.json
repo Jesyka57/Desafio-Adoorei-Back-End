@@ -5,10 +5,128 @@
         "version": "0.0.0.1"
     },
     "paths": {
-        "/api/produtos": {
+        "/api/celulares": {
             "get": {
                 "tags": [
                     "Produtos"
+                ],
+                "summary": "Listar todos os celulares",
+                "operationId": "cd45ea89fc3df08eb808a7f311828d12",
+                "responses": {
+                    "200": {
+                        "description": "Listar todos os celulares"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Armazenar um novo celular",
+                "operationId": "c5a891e2e52977a15ae31c78c7a63957",
+                "requestBody": {
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Celular adicionado com sucesso"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/api/celulares/{celular}": {
+            "get": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Exibir um celular específico",
+                "operationId": "56983a9a8807de2934c8bceeb4a012a0",
+                "parameters": [
+                    {
+                        "name": "celular",
+                        "in": "path",
+                        "description": "ID do celular",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Exibir um celular específico"
+                    },
+                    "404": {
+                        "description": "Celular não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Atualizar um celular",
+                "operationId": "dbec020115fd5a3d49ecc824172b150a",
+                "parameters": [
+                    {
+                        "name": "celular",
+                        "in": "path",
+                        "description": "ID do celular",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Celular atualizado com sucesso"
+                    },
+                    "404": {
+                        "description": "Celular não encontrado"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Excluir um celular",
+                "operationId": "bb24a45b983c386411f61ecd458580cb",
+                "parameters": [
+                    {
+                        "name": "celular",
+                        "in": "path",
+                        "description": "ID do celular",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Celular excluído com sucesso"
+                    },
+                    "404": {
+                        "description": "Celular não encontrado"
+                    }
+                }
+            }
+        },
+        "/api/produtos": {
+            "get": {
+                "tags": [
+                    "Vendas"
                 ],
                 "summary": "Obtém a lista de todos os produtos",
                 "operationId": "2c8d9ab9542b2af4e59939f07333644e",
@@ -28,7 +146,7 @@
         "/api/vendas": {
             "get": {
                 "tags": [
-                    "Produtos"
+                    "Vendas"
                 ],
                 "summary": "Obtém a lista de todas as vendas realizadas",
                 "operationId": "f3e87d61dbe7b9924e1ec26ea1722882",
@@ -46,7 +164,7 @@
             },
             "post": {
                 "tags": [
-                    "Produtos"
+                    "Vendas"
                 ],
                 "summary": "Criação de uma nova venda",
                 "operationId": "d88028b13315b5768cab14937e31874f",
@@ -108,7 +226,7 @@
         "/api/vendas/{id}": {
             "get": {
                 "tags": [
-                    "Produtos"
+                    "Vendas"
                 ],
                 "summary": "Obtém uma venda especifica",
                 "operationId": "67bc1507027596b3629d4c488dc31748",
@@ -126,7 +244,7 @@
             },
             "delete": {
                 "tags": [
-                    "Produtos"
+                    "Vendas"
                 ],
                 "summary": "Cancela uma venda especifica",
                 "operationId": "620d0d0948e181653b0801cf06d7796e",

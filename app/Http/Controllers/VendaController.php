@@ -15,7 +15,7 @@ class VendaController extends Controller
     /**
      * @OA\Get(
      *     path="/api/produtos",
-     *     tags={"Produtos"},
+     *     tags={"Vendas"},
      *     summary="Obtém a lista de todos os produtos",
      *     @OA\Response(response=200, description="Operação executada com sucesso"),
      *     @OA\Response(response=401, description="Não autenticado"),
@@ -30,7 +30,7 @@ class VendaController extends Controller
     /**
      * @OA\Post(
      *     path="/api/vendas",
-     *     tags={"Produtos"},
+     *     tags={"Vendas"},
      *     summary="Criação de uma nova venda",
      *     @OA\Parameter(
     *      description="ID da venda",
@@ -154,7 +154,7 @@ class VendaController extends Controller
     /**
      * @OA\Get(
      *     path="/api/vendas",
-     *     tags={"Produtos"},
+     *     tags={"Vendas"},
      *     summary="Obtém a lista de todas as vendas realizadas",
      *     @OA\Response(response=200, description="Operação executada com sucesso"),
      *     @OA\Response(response=401, description="Não autenticado"),
@@ -170,7 +170,7 @@ class VendaController extends Controller
     /**
      * @OA\Get(
      *     path="/api/vendas/{id}",
-     *     tags={"Produtos"},
+     *     tags={"Vendas"},
      *     summary="Obtém uma venda especifica",
      *     @OA\Response(response=200, description="Operação executada com sucesso"),
      *     @OA\Response(response=401, description="Não autenticado"),
@@ -185,7 +185,7 @@ class VendaController extends Controller
     /**
      * @OA\Delete(
      *     path="/api/vendas/{id}",
-     *     tags={"Produtos"},
+     *     tags={"Vendas"},
      *     summary="Cancela uma venda especifica",
      *     @OA\Parameter(
      *         description="Id da venda",
