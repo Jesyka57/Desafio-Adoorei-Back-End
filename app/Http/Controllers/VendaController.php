@@ -10,10 +10,6 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Throwable;
 
-/**
- * @QA\Server(url="http://localhost/api"),
- * @OA\Info(title="Docker Example", version="0.0.0.1"),
- */
 class VendaController extends Controller
 {
     /**
