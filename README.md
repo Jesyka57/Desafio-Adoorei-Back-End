@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-> Linha adicional de texto informativo sobre o que o projeto faz. Sua introdução deve ter cerca de 2 ou 3 linhas. Não exagere, as pessoas não vão ler.
+> Olá, O projeto a seguir faz parte de um desafio da Adoorei, onde programei utilizando a framework laravel juntamente com  o sail e fazendo a integração com o Docker, utitlizando para implementação do banco MySql. Para fazer os testes, utilizei o Postman para verificar as requisições e os retornos. A documentação, tomei a liberdade de adicionar o swagger como uma ferramenta poderosa para documentação.
 
 ### Ajustes e melhorias
 
@@ -23,20 +23,48 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
-- Você instalou a versão mais recente de `<linguagem / dependência / requeridos>`
-- Você tem uma máquina `<Windows / Linux / Mac>`. Indique qual sistema operacional é compatível / não compatível.
-- Você leu `<guia / link / documentação_relacionada_ao_projeto>`.
+- Se você tem instalado o  ```php 8.1^``` e o ```laravel 4.5.1```.
+- Você tem uma máquina ``<Windows / Linux>``.
+- Você leu `<Readme_Projeto.md>`.
 
-## 🚀 Instalando <nome_do_projeto>
+## 🚀 Instalando <Portifolio-docker-laravel-mysql>
 
-Para instalar o <nome_do_projeto>, siga estas etapas:
+Para instalar o <Portifolio-docker-laravel-mysql>, siga estas etapas:
 
-Linux e macOS:
+Linux:
 
+Instale o laravel sail:
 ```
-<comando_de_instalação>
+php artisan sail:install
 ```
 
+Depois faça suba a aplicação no docker:
+```
+docker-compose down
+```
+
+Já dentro da aplicação, Instale o composer:
+```
+composer install --no-autoloader
+```
+
+Instale o laravel sail pelo composer:
+```
+composer require laravel/sail --dev
+```
+```
+php artisan sail:install
+```
+```
+php artisan sail up
+```
+Após fazer esses passos e sem erros, rode a aplicação:
+```
+docker run -p 8080:80 -p 5173:73 -e LARAVEL_SAIL=1 -v $(pwd):/var/www/html --name docker-example sail-8.1/app
+```
+```
+./vendor/bin/sail up
+```
 Windows:
 
 ```
