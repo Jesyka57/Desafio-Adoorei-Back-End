@@ -38,7 +38,7 @@ php artisan l5-swagger:generate
 ```
 http://localhost/api/documentation
 ```
-## 💻 Teste Unitarios
+## 💻 Testes Unitarios
 Todos os testes unitarios estão com seus respectivos comandos para serem rodados.
 
 ## 📝 Licença

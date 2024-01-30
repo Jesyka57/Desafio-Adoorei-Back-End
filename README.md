@@ -62,14 +62,36 @@ docker run -p 8080:80 -p 5173:73 -e LARAVEL_SAIL=1 -v $(pwd):/var/www/html --nam
 ```
 Após isso, a aplicação já estará rodando normalmente e será possivel ver via promt mesmo.
 
-Swagger:
-
 Windows:
 
 ```
 A diferença entre o linux e o windows é que a necessidade de instalar o WSL para que o laravel sail funcione
 tanto que eu programei na SO Windows atraves do WSL, recomendo <https://learn.microsoft.com/en-us/windows/wsl/install>
 e após a intalação seguir os passos desde o inicio do Linux.
+```
+## ⚠️ Utilizar o .env
+É necessario configurar o .env para a utilização da Api e das migrations e Seeds:
+
+.env para as Migrations/Seeds/Testes Unitarios:
+```
+#Seed/Migrations/Testes Unitarios
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=docker_example
+DB_USERNAME=sail
+DB_PASSWORD=password
+```
+
+.env para a utilização da Api:
+```
+#API
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=docker_example
+DB_USERNAME=sail
+DB_PASSWORD=password
 ```
 
 ## ☕ Usando <Portifolio-docker-laravel-mysql>
@@ -81,6 +103,7 @@ git clone https://github.com/Jesyka57/Portifolio-docker-laravel-mysql.git
 ```
 
 Depois seguir os passos da instalação. Qualquer duvida, ler `<Readme_Projeto.md>` e tambem estou a disposição para qualquer duvida 😄.
+
 
 ## License
 
