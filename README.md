@@ -27,9 +27,9 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 - Você tem uma máquina ``<Windows / Linux>``.
 - Você leu `<Readme_Projeto.md>`.
 
-## 🚀 Instalando <Portifolio-docker-laravel-mysql>
+## 🚀 Instalando <Desafio-Adoorei-Back-End>
 
-Para instalar o <Portifolio-docker-laravel-mysql>, siga estas etapas:
+Para instalar o <Desafio-Adoorei-Back-End>, siga estas etapas:
 
 Linux:
 
@@ -94,12 +94,12 @@ DB_USERNAME=sail
 DB_PASSWORD=password
 ```
 
-## ☕ Usando <Portifolio-docker-laravel-mysql>
+## ☕ Usando <Desafio-Adoorei-Back-End>
 
-Para usar <Portifolio-docker-laravel-mysql>, siga estas etapas:
+Para usar <Desafio-Adoorei-Back-End>, siga estas etapas:
 
 ```
-git clone https://github.com/Jesyka57/Portifolio-docker-laravel-mysql.git
+git clone https://github.com/Jesyka57/Desafio-Adoorei-Back-End.git
 ```
 
 Depois seguir os passos da instalação. Qualquer duvida, ler `<Readme_Projeto.md>` e tambem estou a disposição para qualquer duvida 😄.
