@@ -18,7 +18,7 @@ composer require darkaonline/l5-swagger
 composer require zircote/swagger-php
 ```
 
-2°Adicionar o Provaider:
+2°Adicionar o provider:
 ```
 php artisan vendor:publish --provider “L5Swagger\L5SwaggerServiceProvider”
 ```
