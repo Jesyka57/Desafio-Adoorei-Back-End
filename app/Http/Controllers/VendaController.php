@@ -117,7 +117,7 @@ class VendaController extends Controller
                  'products' =>  VendaProduto::where('venda_id', $venda->id)->get(),
              ]);
          } catch (\Exception $e) {
-             return response()->json(['error' => 'Erro ao vender produto: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'Erro ao vender produto: ' . $e->getMessage()], 500);
          }
     }
     /**
@@ -181,42 +181,47 @@ class VendaController extends Controller
      *     ),
      * )
      */
-    public function editarVenda(Request $request,$id){  
-        $venda = VendaProduto::where('venda_id', $id)->first();
-        $venda_amount = 0;
-        if($venda){
-            foreach ($request->products as $product)
-            {
-                $celular = Celular::find($product['product_id']);
+    public function editarVenda(Request $request,$id){
+        try {  
+            $venda = VendaProduto::where('venda_id', $id)->first();
+            $venda_amount = 0;
+            if($venda){
+                foreach ($request->products as $product)
+                {
+                    $celular = Celular::find($product['product_id']);
 
-                if ($celular==null) {
-                    throw new Exception("O Produto informado não existe", 400);
+                    if ($celular==null) {
+                        throw new Exception("O Produto informado não existe", 400);
+                    }
+
+                    if ($celular->amount >= $product['amount']) {
+
+                        $produto_venda = new VendaProduto();
+                        $produto_venda->venda_id = $venda->venda_id;
+                        $produto_venda->product_id = $product['product_id'];
+                        $produto_venda->nome = $product['nome'];
+                        $produto_venda->price = $product['price'];
+                        $produto_venda->amount = $product['amount'];
+                        $venda_amount = $product['amount'] + $product['amount'];
+                        $produto_venda->save();
+
+                        $celular->amount -= $product['amount'];
+                        $celular->save();
+                    } else {
+                        $venda->delete();
+                        return response()->json(['error' => 'Quantidade insuficiente para a venda'], 400);
+                    }
+                        
                 }
+                    $venda->amount = $venda_amount;
+                    $venda->save();
+                    return response()->json(['message' => 'Venda Editada com Sucesso.',200]);
 
-                if ($celular->amount >= $product['amount']) {
-
-                    $produto_venda = new VendaProduto();
-                    $produto_venda->venda_id = $venda->venda_id;
-                    $produto_venda->product_id = $product['product_id'];
-                    $produto_venda->nome = $product['nome'];
-                    $produto_venda->price = $product['price'];
-                    $produto_venda->amount = $product['amount'];
-                    $venda_amount = $product['amount'] + $product['amount'];
-                    $produto_venda->save();
-
-                    $celular->amount -= $product['amount'];
-                    $celular->save();
-                } else {
-                    $venda->delete();
-                    return response()->json(['error' => 'Quantidade insuficiente para a venda'], 400);
-                }
-                    
+            } else {
+                return response()->json(['error' => 'Erro ao adicionar o produto'], 400);
             }
-                $venda->amount = $venda_amount;
-                $venda->save();
-
-        } else {
-            return response()->json(['error' => 'Erro ao adicionar o produto'], 400);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
         }
     }
     /**
