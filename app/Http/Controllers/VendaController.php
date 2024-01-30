@@ -62,60 +62,128 @@ class VendaController extends Controller
      * )
      */
 
-    public function cadastrarVenda(Request $request)
-    {
-        //try {
-            $venda_amount = 0;
-            $venda_existente = Venda::find($request->id_venda);
-            if($request->id_venda === $venda_existente)
-                throw new Exception("A venda já existe", 400);
-
-            $venda = new Venda();
-            $venda->venda_id = $request->id_venda;
-            $venda->save();
-            foreach ($request->products as $product)
-            {
-                $celular = Celular::find($product['product_id']);
-
-                if ($celular==null) {
-                    $venda->delete();
-                    throw new Exception("O Produto informado não existe", 400);
-                }
-
-                if ($celular->amount >= $product['amount']) {
-
-                    $produto_venda = new VendaProduto();
-                    $produto_venda->venda_id = $request->id_venda;
-                    $produto_venda->product_id = $product['product_id'];
-                    $produto_venda->nome = $product['nome'];
-                    $produto_venda->price = $product['price'];
-                    $produto_venda->amount = $product['amount'];
-                    $venda_amount = $product['amount'] + $product['amount'];
-                    $produto_venda->save();
-
-                    $celular->amount -= $product['amount'];
-                    $celular->save();
-                } else {
-                    $venda->delete();
-                    return response()->json(['error' => 'Quantidade insuficiente para a venda'], 400);
-                }
-                    
-            }
-                $venda->amount = $venda_amount;
-                $venda->save();
-
-                // Retorne a resposta da API
-                return response()->json([
-                    'sales_id' => $venda->id,
-                    'amount' => $venda->amount,
-                    'products' =>  $produto_venda,
-                ]);
-        //} catch (\Exception $e) {
-            //return response()->json(['error' => 'Erro ao vender produto: ' . $e->getMessage()], 500);
-        //}
+     public function cadastrarVenda(Request $request)
+     {
+         try {
+             $venda_amount = 0;
+     
+             // Verifica se a venda já existe pelo ID
+             $venda_existente = Venda::find($request->_id);
+             if ($venda_existente) {
+                 throw new \Exception("A venda já existe", 400);
+             }
+     
+             // Cria a venda
+             $venda = new Venda();
+             $venda->venda_id = $request->_id;
+             $venda->save();
+     
+             foreach ($request->products as $product) {
+                 $celular = Celular::find($product['product_id']);
+     
+                 // Verifica se o celular existe
+                 if (!$celular) {
+                     $venda->delete();
+                     throw new \Exception("O Produto informado não existe", 400);
+                 }
+     
+                 // Verifica se há quantidade suficiente no estoque
+                 if ($celular->amount >= $product['amount']) {
+                     $produto_venda = new VendaProduto();
+                     $produto_venda->venda_id = $venda->id; // Use o ID da venda recém-criada
+                     $produto_venda->product_id = $product['product_id'];
+                     $produto_venda->nome = $product['nome'];
+                     $produto_venda->price = $product['price'];
+                     $produto_venda->amount = $product['amount'];
+                     $produto_venda->save();
+     
+                     $celular->amount -= $product['amount'];
+                     $celular->save();
+     
+                     $venda_amount += $product['amount'];
+                 } else {
+                     $venda->delete();
+                     return response()->json(['error' => 'Quantidade insuficiente para a venda'], 400);
+                 }
+             }
+     
+             $venda->amount = $venda_amount;
+             $venda->save();
+     
+             // Retorne a resposta da API
+             return response()->json([
+                 'sales_id' => $venda->id,
+                 'amount' => $venda->amount,
+                 'products' =>  VendaProduto::where('venda_id', $venda->id)->get(),
+             ]);
+         } catch (\Exception $e) {
+             return response()->json(['error' => 'Erro ao vender produto: ' . $e->getMessage()], 500);
+         }
     }
-    public function editarVenda($id,Request $request){  
-        $venda = VendaProduto::where('venda_id',$id);
+    /**
+     * @OA\Put(
+     *     path="/api/vendas/{id}",
+     *     summary="Edita uma venda",
+     *     description="Edita uma venda existente e adiciona produtos a ela.",
+     *     operationId="editarVenda",
+     *     tags={"Vendas"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID da venda a ser editada",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Dados da venda e produtos",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="products", type="array", @OA\Items(
+     *                 @OA\Property(property="product_id", type="integer", description="ID do produto"),
+     *                 @OA\Property(property="nome", type="string", description="Nome do produto"),
+     *                 @OA\Property(property="price", type="number", format="float", description="Preço do produto"),
+     *                 @OA\Property(property="amount", type="integer", description="Quantidade do produto")
+     *             )),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Venda editada com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="sales_id", type="integer", description="ID da venda editada"),
+     *             @OA\Property(property="amount", type="number", format="float", description="Quantidade total da venda"),
+     *             @OA\Property(property="products", type="array", @OA\Items(
+     *                 @OA\Property(property="venda_id", type="integer", description="ID da venda do produto"),
+     *                 @OA\Property(property="product_id", type="integer", description="ID do produto"),
+     *                 @OA\Property(property="nome", type="string", description="Nome do produto"),
+     *                 @OA\Property(property="price", type="number", format="float", description="Preço do produto"),
+     *                 @OA\Property(property="amount", type="integer", description="Quantidade do produto")
+     *             )),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Erro ao adicionar o produto ou quantidade insuficiente",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", description="Mensagem de erro")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Erro interno no servidor",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", description="Mensagem de erro")
+     *         )
+     *     ),
+     * )
+     */
+    public function editarVenda(Request $request,$id){  
+        $venda = VendaProduto::where('venda_id', $id)->first();
+        $venda_amount = 0;
         if($venda){
             foreach ($request->products as $product)
             {

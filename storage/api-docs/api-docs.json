@@ -25,11 +25,40 @@
                 "summary": "Armazenar um novo celular",
                 "operationId": "c5a891e2e52977a15ae31c78c7a63957",
                 "requestBody": {
-                    "required": true
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "celulares": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "price": {
+                                                    "type": "number"
+                                                },
+                                                "amount": {
+                                                    "type": "integer"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
                 },
                 "responses": {
                     "201": {
-                        "description": "Celular adicionado com sucesso"
+                        "description": "Celulares adicionados com sucesso"
                     },
                     "422": {
                         "description": "Erro de validação"
@@ -37,16 +66,16 @@
                 }
             }
         },
-        "/api/celulares/{celular}": {
+        "/api/celulares/{id}": {
             "get": {
                 "tags": [
                     "Produtos"
                 ],
                 "summary": "Exibir um celular específico",
-                "operationId": "56983a9a8807de2934c8bceeb4a012a0",
+                "operationId": "ad9be36328376bbd9db060a7262af36a",
                 "parameters": [
                     {
-                        "name": "celular",
+                        "name": "id",
                         "in": "path",
                         "description": "ID do celular",
                         "required": true,
@@ -69,10 +98,10 @@
                     "Produtos"
                 ],
                 "summary": "Atualizar um celular",
-                "operationId": "dbec020115fd5a3d49ecc824172b150a",
+                "operationId": "187ccb6a71a85caa06362a1b95cccde4",
                 "parameters": [
                     {
-                        "name": "celular",
+                        "name": "id",
                         "in": "path",
                         "description": "ID do celular",
                         "required": true,
@@ -82,7 +111,28 @@
                     }
                 ],
                 "requestBody": {
-                    "required": true
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number"
+                                    },
+                                    "amount": {
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
                 },
                 "responses": {
                     "200": {
@@ -101,10 +151,10 @@
                     "Produtos"
                 ],
                 "summary": "Excluir um celular",
-                "operationId": "bb24a45b983c386411f61ecd458580cb",
+                "operationId": "21bf1a43ed7da0ae3f862a73c07d09ec",
                 "parameters": [
                     {
-                        "name": "celular",
+                        "name": "id",
                         "in": "path",
                         "description": "ID do celular",
                         "required": true,
@@ -239,6 +289,148 @@
                     },
                     "403": {
                         "description": "Proibido"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Vendas"
+                ],
+                "summary": "Edita uma venda",
+                "description": "Edita uma venda existente e adiciona produtos a ela.",
+                "operationId": "editarVenda",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da venda a ser editada",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dados da venda e produtos",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "products": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "product_id": {
+                                                    "description": "ID do produto",
+                                                    "type": "integer"
+                                                },
+                                                "nome": {
+                                                    "description": "Nome do produto",
+                                                    "type": "string"
+                                                },
+                                                "price": {
+                                                    "description": "Preço do produto",
+                                                    "type": "number",
+                                                    "format": "float"
+                                                },
+                                                "amount": {
+                                                    "description": "Quantidade do produto",
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Venda editada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "sales_id": {
+                                            "description": "ID da venda editada",
+                                            "type": "integer"
+                                        },
+                                        "amount": {
+                                            "description": "Quantidade total da venda",
+                                            "type": "number",
+                                            "format": "float"
+                                        },
+                                        "products": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "venda_id": {
+                                                        "description": "ID da venda do produto",
+                                                        "type": "integer"
+                                                    },
+                                                    "product_id": {
+                                                        "description": "ID do produto",
+                                                        "type": "integer"
+                                                    },
+                                                    "nome": {
+                                                        "description": "Nome do produto",
+                                                        "type": "string"
+                                                    },
+                                                    "price": {
+                                                        "description": "Preço do produto",
+                                                        "type": "number",
+                                                        "format": "float"
+                                                    },
+                                                    "amount": {
+                                                        "description": "Quantidade do produto",
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro ao adicionar o produto ou quantidade insuficiente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Mensagem de erro",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Mensagem de erro",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
