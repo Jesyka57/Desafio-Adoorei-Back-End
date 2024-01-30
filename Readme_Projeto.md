@@ -41,6 +41,13 @@ http://localhost/api/documentation
 ## 💻 Testes Unitarios
 Todos os testes unitarios estão com seus respectivos comandos para serem rodados.
 
+Os testes Unitarios estão na pasta:
+```
+tests\App\Http\Controllers\CelularControllerTest.php
+
+tests\App\Http\Controllers\VendaControllerTest.php
+```
+
 ## 📝 Licença
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
